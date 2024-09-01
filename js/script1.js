@@ -2,13 +2,18 @@ class Produto {
   constructor() {
     this.id = 1;
     this.arr_produtos = [];
+    this.edit_id = null;
   }
 
   salvar() {
     let produto = this.lerDados();
 
     if(this.validaCampos(produto)) {
-      this.adicionar(produto);
+      if(this.edit_id === null) {
+        this.adicionar(produto);
+      } else {
+        this.atualizar(this.edit_id, produto);
+      }
     }
 
     this.populaTabela();
@@ -36,8 +41,28 @@ class Produto {
   }
 
   cancelar() {
+    this.edit_id = null;
+    
     document.getElementById("produto").value = '';
     document.getElementById("preco").value = '';
+    document.getElementById("btn_salvar").textContent = "Salvar";
+  }
+
+  atualizar(id, dado) {
+    for(let i=0; i < this.arr_produtos.length; i++) {
+      if(this.arr_produtos[i].id === id) {
+        this.arr_produtos[i].nome_produto = dado.nome_produto;
+        this.arr_produtos[i].preco = dado.preco;
+      }
+    }
+  }
+
+  obterEditarRow(dado) {
+    this.edit_id = dado.id;
+
+    document.getElementById("produto").value = dado.nome_produto;
+    document.getElementById("preco").value = dado.preco;
+    document.getElementById("btn_salvar").textContent = "Atualizar";
   }
 
   populaTabela() {
@@ -62,7 +87,21 @@ class Produto {
       td_id.textContent = this.arr_produtos[i].id;
       td_produto.textContent = this.arr_produtos[i].nome_produto;
       td_preco.textContent = this.formatarNumero(parseFloat(this.arr_produtos[i].preco));
-      td_acoes.innerHTML = `<i class="fa-solid fa-pen-to-square" title="Editar"></i> <i class="fa-solid fa-trash" title="Excluir" onclick="produto.deletar(${this.arr_produtos[i].id});"></i>`;
+      td_acoes.innerHTML = `
+        <i class="fa-solid fa-pen-to-square" title="Editar" id="editRow${this.arr_produtos[i].id}"></i> 
+        <i class="fa-solid fa-trash" title="Excluir" id="deleteRow${this.arr_produtos[i].id}"></i>
+      `;
+
+      document.getElementById(`editRow${this.arr_produtos[i].id}`)
+      .addEventListener("click", () => {
+        this.obterEditarRow(this.arr_produtos[i]);
+      });
+
+      document.getElementById(`deleteRow${this.arr_produtos[i].id}`)
+      .addEventListener("click", () => {
+        this.deletar(this.arr_produtos[i].id);
+      });
+
 
       total += parseFloat(this.arr_produtos[i].preco);
 
