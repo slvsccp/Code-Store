@@ -24,9 +24,10 @@ class Produto {
   deletar(id) {
     let tbody = document.getElementById("tbody");
   
-    for(let i=0; i < this.arr_produtos.length; i++) {
-      if(this.arr_produtos[i].id === id) {
-        if (window.confirm("Deseja realmente excluir este produto?")) {
+    
+    if (window.confirm("Deseja realmente excluir este produto?")) {
+      for(let i=0; i < this.arr_produtos.length; i++) {
+        if(this.arr_produtos[i].id === id) {
           this.arr_produtos.splice(i, 1);
           tbody.deleteRow(i);
         }
@@ -61,7 +62,7 @@ class Produto {
       td_id.textContent = this.arr_produtos[i].id;
       td_produto.textContent = this.arr_produtos[i].nome_produto;
       td_preco.textContent = this.formatarNumero(parseFloat(this.arr_produtos[i].preco));
-      td_acoes.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> <i class="fa-solid fa-trash" onclick="produto.deletar(${this.arr_produtos[i].id});"></i>`;
+      td_acoes.innerHTML = `<i class="fa-solid fa-pen-to-square" title="Editar"></i> <i class="fa-solid fa-trash" title="Excluir" onclick="produto.deletar(${this.arr_produtos[i].id});"></i>`;
 
       total += parseFloat(this.arr_produtos[i].preco);
 
