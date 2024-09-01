@@ -83,6 +83,12 @@ body {
       }
 
       #content {
+        #valor_total {
+          text-align: right;
+          font-weight: 600;
+          margin-bottom: 2px;
+        }
+
         table {
           width: 100%;
           border-collapse: collapse;
@@ -92,6 +98,10 @@ body {
             padding: 5px;
             background-color: rgb(235 235 235);
             color: #3a687a;
+
+            &.actions {
+              width: 84px;
+            }
           }
 
           td {
@@ -103,7 +113,6 @@ body {
               gap: 15px;
               justify-content: center;
               color: #3a687a;
-              border: none;
               cursor: pointer;
 
               & i:hover {
