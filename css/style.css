@@ -137,3 +137,45 @@ body {
 
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  & .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    text-align: center;
+  }
+  
+  & button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #4e8397;
+    color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+    width: 126px;
+    outline: none;
+    cursor: pointer;
+    border: 0;
+    font-weight: 700;
+    height: 37px;
+    transition: .5s;
+
+    &:hover {
+      background-color: #3a687a;
+      transform: scale(1.1);
+    }
+  }
+
+}

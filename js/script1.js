@@ -14,24 +14,25 @@ class Produto {
       } else {
         this.atualizar(this.edit_id, produto);
       }
-    }
+      
+      Toastify({
+        text: "Operação realizada com sucesso!",
+        duration: 2000,
+        newWindow: true,
+        close: true,
+        gravity: "top",
+        position: "center",
+        stopOnFocus: true,
+        style: {
+          background: "#28a745",
+        },
+        onClick: function(){}
+      }).showToast();
 
-    Toastify({
-      text: "Operação realizada com sucesso!",
-      duration: 2100,
-      newWindow: true,
-      close: true,
-      gravity: "top",
-      position: "center",
-      stopOnFocus: true,
-      style: {
-        background: "#28a745",
-      },
-      onClick: function(){}
-    }).showToast();    
+      this.cancelar();
+    } 
 
     this.populaTabela();
-    this.cancelar();
   }
 
   adicionar(produto) {
@@ -41,33 +42,53 @@ class Produto {
   }
 
   deletar(id) {
-    let tbody = document.getElementById("tbody");
-    
-    if (window.confirm("Deseja realmente excluir este produto?")) {
-      for(let i=0; i < this.arr_produtos.length; i++) {
+    let modal = document.getElementById("confirmModal");
+    let confirmBtn = document.getElementById("confirmBtn");
+    let cancelBtn = document.getElementById("cancelBtn");
+    let modal_message = document.querySelector("#confirmModal .modal-content .message");
+  
+    modal.style.display = "block"; // Mostrar o modal
+
+    modal_message.innerHTML = `<p>Deseja realmente excluir este produto?</p>`;
+  
+    confirmBtn.onclick = () => {
+      let tbody = document.getElementById("tbody");
+      
+      for(let i = 0; i < this.arr_produtos.length; i++) {
         if(this.arr_produtos[i].id === id) {
           this.arr_produtos.splice(i, 1);
           tbody.deleteRow(i);
         }
       }
-    }
-
-    Toastify({
-      text: "Item excluído com sucesso!",
-      duration: 3000,
-      newWindow: true,
-      close: true,
-      gravity: "top",
-      position: "center",
-      stopOnFocus: true,
-      style: {
-        background: "#fd7e14",
-      },
-      onClick: function(){}
-    }).showToast();
-    
-    this.populaTabela();
-  }
+  
+      Toastify({
+        text: "Item excluído com sucesso!",
+        duration: 2000,
+        newWindow: true,
+        close: true,
+        gravity: "top",
+        position: "center",
+        stopOnFocus: true,
+        style: {
+          background: "#fd7e14",
+        },
+        onClick: function(){}
+      }).showToast();
+  
+      this.populaTabela();
+      modal.style.display = "none"; // Esconder o modal
+    };
+  
+    cancelBtn.onclick = () => {
+      modal.style.display = "none"; // Esconder o modal
+    };
+  
+    window.onclick = (event) => {
+      if (event.target == modal) {
+        modal.style.display = "none"; // Esconder o modal se clicar fora
+      }
+    };
+  }  
 
   cancelar() {
     this.edit_id = null;
@@ -158,11 +179,24 @@ class Produto {
     } else if(produto.preco == '') {
       msg += 'Informe o preço do produto.'
     } else if(!Number(produto.preco)) {
-      msg += 'Informe um valor válido.'
+      msg += 'Informe um valor válido. (Ex: 1000 ou 1.000)'
     }
 
     if(msg != '') {
-      alert(msg);
+      Toastify({
+        text: msg,
+        duration: 2000,
+        newWindow: true,
+        close: true,
+        gravity: "top",
+        position: "center",
+        stopOnFocus: true,
+        style: {
+          background: "#007bff",
+        },
+        onClick: function(){}
+      }).showToast();
+      
       return false;
     }
 
