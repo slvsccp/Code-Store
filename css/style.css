@@ -89,6 +89,11 @@ body {
           margin-bottom: 2px;
         }
 
+        .table-responsive {
+          overflow: auto;
+          max-height: 11rem;
+        }
+
         table {
           width: 100%;
           border-collapse: collapse;
@@ -98,6 +103,8 @@ body {
             padding: 5px;
             background-color: rgb(235 235 235);
             color: #3a687a;
+            position: sticky;
+            top: 0;
 
             &.actions {
               width: 84px;

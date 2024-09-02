@@ -16,6 +16,20 @@ class Produto {
       }
     }
 
+    Toastify({
+      text: "Operação realizada com sucesso!",
+      duration: 2100,
+      newWindow: true,
+      close: true,
+      gravity: "top",
+      position: "center",
+      stopOnFocus: true,
+      style: {
+        background: "#28a745",
+      },
+      onClick: function(){}
+    }).showToast();    
+
     this.populaTabela();
     this.cancelar();
   }
@@ -23,12 +37,11 @@ class Produto {
   adicionar(produto) {
     this.arr_produtos.push(produto);
     this.id++;
-    console.log(this.arr_produtos)
+    // console.log(this.arr_produtos)
   }
 
   deletar(id) {
     let tbody = document.getElementById("tbody");
-  
     
     if (window.confirm("Deseja realmente excluir este produto?")) {
       for(let i=0; i < this.arr_produtos.length; i++) {
@@ -38,6 +51,22 @@ class Produto {
         }
       }
     }
+
+    Toastify({
+      text: "Item excluído com sucesso!",
+      duration: 3000,
+      newWindow: true,
+      close: true,
+      gravity: "top",
+      position: "center",
+      stopOnFocus: true,
+      style: {
+        background: "#fd7e14",
+      },
+      onClick: function(){}
+    }).showToast();
+    
+    this.populaTabela();
   }
 
   cancelar() {
@@ -46,6 +75,7 @@ class Produto {
     document.getElementById("produto").value = '';
     document.getElementById("preco").value = '';
     document.getElementById("btn_salvar").textContent = "Salvar";
+    this.populaTabela();
   }
 
   atualizar(id, dado) {
@@ -72,7 +102,7 @@ class Produto {
 
     tbody.textContent = '';
     for(let i=0; i < this.arr_produtos.length; i++) {
-      console.log(this.arr_produtos[i]);
+      // console.log(this.arr_produtos[i]);
 
       let tr = tbody.insertRow();
 
